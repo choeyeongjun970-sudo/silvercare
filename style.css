@@ -4,10 +4,10 @@
 
 /* ===== CSS Variables ===== */
 :root {
-  /* Color Palette - Inspired by Envato Elements */
-  --pr-green: #89e64e; /* Bright accent green */
-  --pr-green-hover: #75cd41;
-  --pr-green-light: #eafbe1;
+  /* Color Palette - Updated to Mint */
+  --pr-green: #4fd1c5; /* Mint accent */
+  --pr-green-hover: #38b2ac;
+  --pr-green-light: #e6fffa;
   
   --bg-main: #fcfbfa; /* Light cream/beige background */
   --bg-white: #ffffff;
