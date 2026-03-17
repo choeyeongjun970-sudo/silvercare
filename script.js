@@ -53,74 +53,23 @@ document.addEventListener('DOMContentLoaded', () => {
       sections.forEach(current => {
         const sectionHeight = current.offsetHeight,
               sectionTop = current.offsetTop - 100,
-              sectionId = current.getAttribute('id'),
-              sectionsClass = document.querySelector('.nav-menu a[href*=' + sectionId + ']');
+              sectionId = current.getAttribute('id');
+        
+        // Match both mobile and desktop navigation links
+        const navLink = document.querySelector(`.nav-menu a[href*=${sectionId}], .nav-dropdowns .nav-item a[href*=${sectionId}]`);
   
-        if(sectionsClass) {
+        if(navLink) {
           if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-            sectionsClass.classList.add('active-link');
-            sectionsClass.style.color = 'var(--pr-color)';
+            navLink.parentElement.classList.add('active-link');
+            // Support for old menu style if needed
+            if (navLink.classList.contains('nav-link')) navLink.classList.add('active-link');
           } else {
-            sectionsClass.classList.remove('active-link');
-            sectionsClass.style.color = '';
+            navLink.parentElement.classList.remove('active-link');
+            if (navLink.classList.contains('nav-link')) navLink.classList.remove('active-link');
           }
         }
       });
     };
-    window.addEventListener('scroll', scrollActive);
-  
-  
-    /* ===== Show Scroll Up Button ===== */
-    const scrollUp = () => {
-      const scrollUpBtn = document.getElementById('scroll-up');
-      // When the scroll is higher than 350 viewport height, add the show-scroll class to the a tag with the scroll-up class
-      if(this.scrollY >= 350) scrollUpBtn.classList.add('show-scroll');
-      else scrollUpBtn.classList.remove('show-scroll');
-    };
-    window.addEventListener('scroll', scrollUp);
-  
-  
-    /* ===== Scroll Reveal Animations ===== */
-    const fadeElements = document.querySelectorAll('.fade-in-up, .reveal');
-  
-    const revealOnScroll = () => {
-      const windowHeight = window.innerHeight;
-      const revealPoint = 100;
-  
-      fadeElements.forEach((el) => {
-        const revealTop = el.getBoundingClientRect().top;
-  
-        if (revealTop < windowHeight - revealPoint) {
-          el.classList.add('active');
-        }
-      });
-    };
-  
-    // Trigger on load
-    revealOnScroll();
-    
-    // Trigger on scroll
-    window.addEventListener('scroll', revealOnScroll);
-  
-    // --- Active Link on Scroll (Scroll-spy) ---
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-dropdowns .nav-item a, .header-top .logo');
-
-    function scrollActive() {
-        const scrollY = window.pageYOffset;
-
-        sections.forEach(current => {
-            const sectionHeight = current.offsetHeight;
-            const sectionTop = current.offsetTop - 100;
-            const sectionId = current.getAttribute('id');
-
-            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                document.querySelector(`.nav-dropdowns .nav-item a[href*=${sectionId}]`)?.parentElement.classList.add('active-link');
-            } else {
-                document.querySelector(`.nav-dropdowns .nav-item a[href*=${sectionId}]`)?.parentElement.classList.remove('active-link');
-            }
-        });
-    }
     window.addEventListener('scroll', scrollActive);
 
     // --- Search Interaction ---
