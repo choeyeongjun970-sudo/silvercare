@@ -102,6 +102,72 @@ document.addEventListener('DOMContentLoaded', () => {
     // Trigger on scroll
     window.addEventListener('scroll', revealOnScroll);
   
+    // --- Search Interaction ---
+    const searchInput = document.querySelector('.search-input');
+    const searchCategory = document.querySelector('.search-category');
+    
+    if (searchInput) {
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = searchInput.value.trim();
+                if (query) {
+                    alert(`"${query}"에 대한 돌봄 서비스를 찾는 중입니다. (데모 버전)`);
+                }
+            }
+        });
+    }
+
+    if (searchCategory) {
+        searchCategory.addEventListener('click', () => {
+            alert('카테고리 필터 기능은 준비 중입니다.');
+        });
+    }
+
+    // --- Smooth Scroll for All Anchors ---
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const headerOffset = 80;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }
+        });
+    });
+
+    // --- Privacy Modal Logic ---
+    const privacyBtn = document.querySelector('.footer-legal a strong');
+    const modal = document.getElementById('privacyModal');
+    const closeBtn = document.querySelector('.close-modal');
+
+    if (privacyBtn && modal) {
+        privacyBtn.parentElement.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.style.display = 'block';
+        });
+    }
+
+    if (closeBtn && modal) {
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    }
+
     /* ===== Contact Form Submission ===== */
     const contactForm = document.getElementById('contactForm');
     if(contactForm) {
