@@ -102,6 +102,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // Trigger on scroll
     window.addEventListener('scroll', revealOnScroll);
   
+    // --- Active Link on Scroll (Scroll-spy) ---
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-dropdowns .nav-item a, .header-top .logo');
+
+    function scrollActive() {
+        const scrollY = window.pageYOffset;
+
+        sections.forEach(current => {
+            const sectionHeight = current.offsetHeight;
+            const sectionTop = current.offsetTop - 100;
+            const sectionId = current.getAttribute('id');
+
+            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                document.querySelector(`.nav-dropdowns .nav-item a[href*=${sectionId}]`)?.parentElement.classList.add('active-link');
+            } else {
+                document.querySelector(`.nav-dropdowns .nav-item a[href*=${sectionId}]`)?.parentElement.classList.remove('active-link');
+            }
+        });
+    }
+    window.addEventListener('scroll', scrollActive);
+
     // --- Search Interaction ---
     const searchInput = document.querySelector('.search-input');
     const searchCategory = document.querySelector('.search-category');
